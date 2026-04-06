@@ -33,6 +33,16 @@ function App() {
         // 3. input에 입력된 값도 삭제해야함  -> input이라고 하는 태그의 value 속성을 비워줘야 되는 일
     };
 
+    const deleteTodo = (index) => {
+            // 우리가 삭제해야 되는 것은 index로 접근할 수있음, 훨씬 위에 있는 list에서
+            // 우리가 삭제하려는 button 에걸린 인덱스 : index, filter를 통해 걸러내려는 인덱스 번호 : i
+            setList(
+                list.filter((v, i) => {
+                    return i !== index;
+                }),
+            );
+    };
+
     return (
         <div>
             <h1>My ToDo ({list.length})</h1>
@@ -40,8 +50,7 @@ function App() {
                   form 태그 내부의 input에서 엔터를 치거나, button (정확히는 button의 type이 "submit"인 button) 을 누르면,
                   form의 onSubmit 속성을 실행시킴
             */}
-            <form
-                onSubmit={onSubmit}>
+            <form onSubmit={onSubmit}>
                 {/*
                     input에 입력이 일어날 때마다 실행하는 속성 : onChange
                     입력이 일어난 "사건(이벤트)"이고,
@@ -70,7 +79,15 @@ function App() {
                                            그 값은 이 map이 반환하는 태그들 사이에서 겹치지 않는 유일값을 넣어줘야 함
                 */}
                 {list.map((value, index) => {
-                    return <li key={index}>{value}</li>;
+                    return (
+                        <li key={index}>
+                            {value}{" "}
+                            <button
+                                onClick={() => deleteTodo(index)}>
+                                ❌
+                             </button>
+                        </li>
+                    );
                 })}
             </ul>
         </div>
